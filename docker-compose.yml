@@ -21,8 +21,7 @@ services:
     build: 
       context: ./user-interaction-service
       network: host
-    command: > 
-      sh -c "python manage.py runserver 0.0.0.0:8001"
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8001"
     volumes:
       - ./user-interaction-service:/app
     ports:
@@ -38,8 +37,7 @@ services:
     build: 
       context: ./user-service
       network: host
-    command: > 
-      sh -c "python manage.py runserver 0.0.0.0:8002"
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8002"
     volumes:
       - ./user-service:/app
     ports:
