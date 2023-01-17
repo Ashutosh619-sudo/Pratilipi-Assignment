@@ -26,6 +26,9 @@ class UploadFileView(APIView):
         fs = FileSystemStorage(location='tmp/')
 
         file = request.FILES["file"]
+        if file.name.split(".")[-1] != "csv":
+            return Response({"data":"Only CSV file is allowed!"}, status=status.HTTP_400_BAD_REQUEST)
+
         content = file.read()
 
         file_content = ContentFile(content)
@@ -46,7 +49,7 @@ class NewContentView(APIView):
 
     def get(self,request):
 
-        contents = Content.objects.all().order_by('date_published')
+        contents = Content.objects.all().order_by('-date_published')
         serializer = ContentSerializer(contents,many=True)
 
         return Response({"data":serializer.data},status=status.HTTP_200_OK)
