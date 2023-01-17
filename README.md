@@ -41,7 +41,7 @@ User-interaction-services: http://localhost:8002/docs/
   4) ContentCreateView: This view lists and creates the contents. It is exposed as content/ in the API.
   5) ContentRetrieveUpdateDes: This view retrieves, updates and deletes a single content.
   
-  ### Consumer:
+### Consumer:
     Its a rabbitmq consumer which is listening to a queue called 'like' and whenever their is a event in this queue it triggers a celery taska named like_event which takes the content_id present in the body of the event and increases its like by 1. This event is produced in the user interaction service when a api endpoint is called for liking a content.
 
 ## User Interaction Service:
