@@ -6,8 +6,9 @@ To run the project run:
 2) after it builds the whole thing run docker-compose up
 
 
-Custom Data has been provided in the data folder
+Custom Content Data has been provided in the data folder.
 
+The custome content data assumes that the user already exists in the user service database.
 
 Documentation for services:
 Content-services: http://localhost:8000/docs/
