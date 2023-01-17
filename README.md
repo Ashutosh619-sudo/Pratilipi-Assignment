@@ -7,3 +7,4 @@ To run the project run:
 
 
 Custom Data has been provided in the data folder
+![](design/HLD.png)
