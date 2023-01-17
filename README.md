@@ -8,7 +8,7 @@ To run the project run:
 
 Custom Content Data has been provided in the data folder.
 
-The custome content data assumes that the user already exists in the user service database.
+The custome content data assumes that the user_id present in the csv already exists in the user service database.
 
 Documentation for services:
 Content-services: http://localhost:8000/docs/
