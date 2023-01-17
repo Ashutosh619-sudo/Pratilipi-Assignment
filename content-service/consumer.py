@@ -1,17 +1,17 @@
 import pika,json
 import django
 from sys import path
-from os import environ
+import os
 import time
 
-path.append('C:\\Users\\ashut\\Desktop\\pratilipi\\content-service\\core\\settings.py') #Your path to settings.py file
-environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings') 
+
+path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),'core', 'settings.py')) #Your path to settings.py file
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings') 
 
 django.setup()
 
 
 from content.tasks import like_event
-
 
 def wrapper_callback(ch, method, properties, body):
     body = json.loads(body)
