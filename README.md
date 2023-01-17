@@ -40,11 +40,13 @@ User-interaction-services: http://localhost:8002/docs/
     returns the top content data to the user. It is exposed as content/top-content/ in the API.
   4) ContentCreateView: This view lists and creates the contents. It is exposed as content/ in the API.
   5) ContentRetrieveUpdateDes: This view retrieves, updates and deletes a single content.
-  
+
+
 ### Consumer:
-    Its a rabbitmq consumer which is listening to a queue called 'like' and whenever their is a event in this queue it triggers a celery taska named like_event which takes the content_id present in the body of the event and increases its like by 1. This event is produced in the user interaction service when a api endpoint is called for liking a content.
+   Its a rabbitmq consumer which is listening to a queue called 'like' and whenever their is a event in this queue it triggers a celery taska named like_event which takes the content_id present in the body of the event and increases its like by 1. This event is produced in the user interaction service when a api endpoint is called for liking a content.
+
 
 ## User Interaction Service:
-    1) InteractionView: This view adds a interaction in the database, interactions are of two type Like and Read. It first checks if the user exists by calling an API to user exists API. If the interaction type is like it produces an like event which is added in the rabbitmq queue. This event is consumed by the consumer running in the content service.
-    2) TopInteractionsView: This view filters the interaction table and gets the most liked and read interactions and returns the result, this view is used by the content service Topcontentview to get the best content(most liked and read).
+   1) InteractionView: This view adds a interaction in the database, interactions are of two type Like and Read. It first checks if the user exists by calling an API to user exists API. If the interaction type is like it produces an like event which is added in the rabbitmq queue. This event is consumed by the consumer running in the content service.
+   2) TopInteractionsView: This view filters the interaction table and gets the most liked and read interactions and returns the result, this view is used by the content service Topcontentview to get the best content(most liked and read).
     
