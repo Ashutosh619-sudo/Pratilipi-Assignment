@@ -43,7 +43,7 @@ User-interaction-services: http://localhost:8002/docs/
 
 
 ### Consumer:
-   Its a rabbitmq consumer which is listening to a queue called 'like' and whenever their is a event in this queue it triggers a celery taska named like_event which takes the content_id present in the body of the event and increases its like by 1. This event is produced in the user interaction service when a api endpoint is called for liking a content.
+   Its a rabbitmq consumer which is listening to a queue called 'like' and whenever there is a event in this queue it triggers a celery task named like_event which takes the content_id present in the body of the event and it fetches the content by its id and increases its like by 1. This event is produced in the user interaction service when a api endpoint is called for liking a content.
 
 
 ## User Interaction Service:
