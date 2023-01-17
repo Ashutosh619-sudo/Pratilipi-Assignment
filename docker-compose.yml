@@ -1,0 +1,98 @@
+version: '3'
+services:
+  content-service:
+    build: 
+      context: ./content-service
+      network: host
+    command: supervisord -c /etc/supervisor/conf.d/supervisord.conf
+    
+    volumes:
+      - ./content-service:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - content-db
+      - redis
+      - rabbitmq
+    environment:
+      - DATABASE_URL=postgres://postgres:password@content-db:5432/content_db
+      - DJANGO_SETTINGS_MODULE=core.settings
+  user-interaction-service:
+    build: 
+      context: ./user-interaction-service
+      network: host
+    command: > 
+      sh -c "python manage.py runserver 0.0.0.0:8001"
+    volumes:
+      - ./user-interaction-service:/app
+    ports:
+      - "8001:8001"
+    depends_on:
+      - interaction-db
+      - redis
+      - rabbitmq
+    environment:
+      - DATABASE_URL=postgres://postgres:password@interaction-db:5432/interaction_db
+      - DJANGO_SETTINGS_MODULE=core.settings
+  user-service:
+    build: 
+      context: ./user-service
+      network: host
+    command: > 
+      sh -c "python manage.py runserver 0.0.0.0:8002"
+    volumes:
+      - ./user-service:/app
+    ports:
+      - "8002:8002"
+    depends_on:
+      - user-db
+      - redis
+      - rabbitmq
+    environment:
+      - DATABASE_URL=postgres://postgres:password@user-db:5432/user_db
+      - DJANGO_SETTINGS_MODULE=core.settings
+  content-db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=content_db
+    volumes:
+      - content-db-data:/var/lib/postgresql/data/
+    command: -p 5433
+    expose:
+      - "5433"
+  interaction-db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=interaction_db
+    volumes:
+      - interaction-db-data:/var/lib/postgresql/data/
+    command: -p 5434
+    expose:
+      - "5434"
+  user-db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=user_db
+    volumes:
+      - user-db-data:/var/lib/postgresql/data/
+
+  redis:
+    image: redis:alpine
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    depends_on:
+      - redis
+volumes:
+  content-db-data:
+  interaction-db-data:
+  user-db-data:
