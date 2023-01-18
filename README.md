@@ -19,7 +19,7 @@ User-interaction-services: http://localhost:8002/docs/
 
 # High Level Design
 
-![](design/High Level Design.png)
+![](design/HLD.png)
 
 
 
