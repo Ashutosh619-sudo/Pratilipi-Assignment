@@ -9,6 +9,7 @@ To run the project run:
 Custom Content Data has been provided in the data folder.
 
 The custome content data assumes that the user_id present in the csv already exists in the user service database.
+To create a user POST request to this endpoint http://localhost:8001/users/ and provide the username and password in the body of the request.
 
 Documentation for services:
 Content-services: http://localhost:8000/docs/
